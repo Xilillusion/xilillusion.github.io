@@ -1,0 +1,14 @@
+---
+title: "Yingwen Liu"
+about:
+  template: jolla
+  image: images/profile.webp
+---
+
+This is a Quarto website.
+
+To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+
+I come from Guangdong China. I studied in University of Alberta for Bachelor of Science in Computing Science before MDS. I hope I can find a good job after the program.
+Note that I does not look like the image above.
+This milestone provides basic instructions on how to use quarto.

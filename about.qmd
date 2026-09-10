@@ -1,0 +1,21 @@
+---
+title: "About"
+---
+
+Background:
+I grew up in Dongguan Guangdong China, and finished my high school and undergraduate in Canada.
+
+Why data science:
+Data science is the best choice for a Computer Science undergrad who decides not to continue in CS.
+
+Outside of data science
+
+- Hobbies: Minecraft, and more video games; algorithms, neural networks, and more vibe coding.
+
+- Sports: Fishing, biking, swimming
+
+- Music: Electronic music (House)
+
+- Food: Anything that is edible
+
+- Weekend: Get some sleep
