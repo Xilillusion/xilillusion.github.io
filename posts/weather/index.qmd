@@ -1,0 +1,77 @@
+---
+title: "Analyzing Relationship between Temperature and Relative Humidity across NYC Airports"
+author: "Yingwen"
+date: "2026-09-22"
+---
+
+## Data Source
+
+The data used in this post comes from the `weather` dataset in the [`nycflights13` package on CRAN](https://cran.r-project.org/package=nycflights13). It contains the weather information across airports near New York.
+
+```{r}
+#| label: setup
+#| message: false
+#| warning: false
+
+library(nycflights13)
+library(dplyr)
+library(ggplot2)
+
+# Load dataset into memory
+data("weather", package = "nycflights13")
+head(weather)
+```
+
+## Exploratory Analysis
+
+To evaluate temperature differences across the metropolitan region, we filter missing readings and calculate central tendency and spread for each airport.
+
+```{r}
+#| label: summary-stats
+#| echo: true
+
+# Clean missing values and compute summary metrics
+weather |>
+  filter(!is.na(temp)) |>
+  group_by(origin) |>
+  summarise(
+    Mean_Temp = round(mean(temp), 2),
+    Median_Temp = round(median(temp), 2),
+    SD_Temp = round(sd(temp), 2),
+    IQR_Temp = round(IQR(temp), 2),
+    Observations = n()
+  )
+```
+
+We generate comparative boxplots overlaid with density contours to visualize the spread, skewness, and potential outliers across the three airports.
+
+```{r}
+#| label: fig-temp-distributions
+#| fig-cap: "Temperature distributions and medians across EWR, JFK, and LGA airports."
+#| echo: true
+
+weather_clean <- weather |> filter(!is.na(temp))
+
+ggplot(weather_clean, aes(x = origin, y = temp, fill = origin)) +
+  geom_boxplot() +
+  labs(
+    title = "Temperature Distribution by NYC Airport",
+    subtitle = "Hourly records from 2013",
+    x = "Airport Code",
+    y = "Temperature (°F)"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "none")
+```
+
+Although the means appear similar, we run an ANOVA to formally test whether the minor observed differences in mean temperature across airports are statistically significant.
+
+```{r}
+#| label: temp-anova-test
+#| echo: true
+
+# Fit ANOVA model testing temperature differences across origins
+anova_model <- aov(temp ~ origin, data = weather_clean)
+summary(anova_model)
+```
+The ANOVA test yields an $F$-statistic of 13.16 with a $p$-value of 1.95e-06. Because the $p$-value is very small, we reject the null hypothesis. There is statistically significant difference in mean air temperature among EWR, JFK, and LGA.

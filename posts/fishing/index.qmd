@@ -1,12 +1,12 @@
 ---
-title: "Analyzing Choice of Fishing Modes"
+title: "Analyzing Temporal Factors Influencing Fish Concentration"
 author: "Yingwen"
 date: "2026-09-21"
 ---
 
 ## Data Source
 
-The data used in this post comes from the `fishing` dataset in the [`COUNT` package on CRAN](https://cran.r-project.org/package=COUNT). It contains survey data detailing recreational fishing mode choices (beach, pier, boat, or charter) alongside individuals' income and target species catch rates.
+The data used in this post comes from the `fishing` dataset in the [`COUNT` package on CRAN](https://cran.r-project.org/package=COUNT). It contains data detailing fish catching data such as site number, fish density and so on.
 
 ```{r}
 #| label: setup
