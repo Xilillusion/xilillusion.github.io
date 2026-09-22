@@ -1,0 +1,84 @@
+---
+title: "Analyzing Choice of Fishing Modes"
+author: "Yingwen"
+date: "2026-09-21"
+---
+
+## Data Source
+
+The data used in this post comes from the `fishing` dataset in the [`COUNT` package on CRAN](https://cran.r-project.org/package=COUNT). It contains survey data detailing recreational fishing mode choices (beach, pier, boat, or charter) alongside individuals' income and target species catch rates.
+
+```{r}
+#| label: setup
+#| message: false
+#| warning: false
+
+library(COUNT)
+library(dplyr)
+library(ggplot2)
+
+# Load dataset into memory
+data("fishing", package = "COUNT")
+head(fishing)
+```
+
+## Exploratory Analysis
+
+To understand the temporal factors influencing fish concentration, we first examine how annual observations impact average fish density.
+
+```{r}
+#| label: year-summary-stats
+#| echo: true
+
+mode_summary <- fishing |>
+  group_by(year) |>
+  summarize(
+    count = n(),
+    mean_density = mean(density, na.rm = TRUE),
+    median_density = median(density, na.rm = TRUE)
+  ) |>
+  arrange(desc(mean_density))
+
+mode_summary
+```
+Evaluating aggregate annual density yields no clear directional trend. Next, we aggregate density by individual observation period to assess intra-annual patterns.
+
+```{r}
+#| label: period-summary-stats
+#| echo: true
+
+mode_summary <- fishing |>
+  group_by(period) |>
+  summarize(
+    count = n(),
+    mean_density = mean(density, na.rm = TRUE),
+    median_density = median(density, na.rm = TRUE)
+  ) |>
+  arrange(desc(mean_density))
+
+mode_summary
+```
+Grouping by period reveals a pronounced downward trajectory in fish density over time. To better evaluate why annual averages mask this trend, we generate a figure comparing yearly density values.
+
+```{r}
+#| label: fig-yearly-density
+#| fig-cap: "Distribution of fish density across observation years."
+#| echo: true
+
+ggplot(fishing, aes(x = factor(year), y = density)) +
+  geom_boxplot(fill = "steelblue", alpha = 0.4, outlier.shape = NA) +
+  geom_jitter(width = 0.15, alpha = 0.6, color = "darkblue") +
+  labs(
+    x = "Year",
+    y = "Fish Density",
+    title = "Yearly Fish Density Distribution"
+  ) +
+  theme_minimal()
+```
+
+## What We Found
+
+Analyzing `@fig-yearly-density` shows key insights into the temporal pattern of fish density across the dataset:
+
+- **Inconsistent Sampling Volume:** Data collection is heavily concentrated in 1978 to 1983 and 2000 to 2002. Years such as 1977, 1984, 1986, and 1989 contain very few observations, resulting in near-zero spread.
+- **Higher Variability in early 1980s:** Between 1979 and 1983, fish density exhibited high overall variance, with median values near 0.005 and frequent high-density peaks exceeding 0.02.

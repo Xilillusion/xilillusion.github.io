@@ -4,7 +4,28 @@
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "Background: I grew up in Dongguan Guangdong China, and finished my high school and undergraduate in Canada.\nWhy data science: Data science is the best choice for a Computer Science undergrad who decides not to continue in CS.\nOutside of data science\n\nHobbies: Minecraft, and more video games; algorithms, neural networks, and more vibe coding.\nSports: Fishing, biking, swimming\nMusic: Electronic music (House)\nFood: Anything that is edible\nWeekend: Get some sleep"
+    "text": "I grew up in Dongguan Guangdong China, and finished my high school and undergraduate in Canada."
+  },
+  {
+    "objectID": "about.html#background",
+    "href": "about.html#background",
+    "title": "About",
+    "section": "",
+    "text": "I grew up in Dongguan Guangdong China, and finished my high school and undergraduate in Canada."
+  },
+  {
+    "objectID": "about.html#why-data-science",
+    "href": "about.html#why-data-science",
+    "title": "About",
+    "section": "Why data science",
+    "text": "Why data science\nData science is the best choice for a Computer Science undergrad who decides not to continue in CS."
+  },
+  {
+    "objectID": "about.html#outside-of-data-science",
+    "href": "about.html#outside-of-data-science",
+    "title": "About",
+    "section": "Outside of data science",
+    "text": "Outside of data science\n\nHobbies: Minecraft, and more video games; algorithms, neural networks, and more vibe coding.\nSports: Fishing, biking, swimming\nMusic: Electronic music (House)\nFood: Anything that is edible\nWeekend: Get some sleep"
   },
   {
     "objectID": "index.html",
@@ -18,7 +39,7 @@
     "href": "posts/first-weeks/index.html",
     "title": "My first weeks in MDS",
     "section": "",
-    "text": "Orientation day on campus."
+    "text": "This is the text message"
   },
   {
     "objectID": "blog.html",

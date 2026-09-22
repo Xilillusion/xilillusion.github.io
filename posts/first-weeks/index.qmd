@@ -4,4 +4,5 @@ author: "Yingwen Liu"
 date: 2026-09-09
 ---
 
+This is the text message
 ![Orientation day on campus.](orientation.jpg)
