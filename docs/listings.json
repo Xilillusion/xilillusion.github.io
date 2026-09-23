@@ -1,0 +1,11 @@
+[
+  {
+    "listing": "/blog.html",
+    "items": [
+      "/posts/weather/index.html",
+      "/posts/fishing-python-r/index.html",
+      "/posts/fishing/index.html",
+      "/posts/first-weeks/index.html"
+    ]
+  }
+]

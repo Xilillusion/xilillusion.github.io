@@ -9,7 +9,7 @@ date: "2026-09-21"
 The data used in this post comes from the `fishing` dataset in the [`COUNT` package on CRAN](https://cran.r-project.org/package=COUNT). It contains data detailing fish catching data such as site number, fish density and so on.
 
 ```{python}
-#| label: setup
+#| label: setup_python
 #| message: false
 #| warning: false
 
@@ -24,7 +24,7 @@ fishing.head()
 ```
 
 ```{r}
-#| label: setup
+#| label: setup_r
 #| message: false
 #| warning: false
 library(reticulate)
