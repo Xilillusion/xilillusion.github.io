@@ -19,6 +19,7 @@ R packages:
 - ggplot2
 - nycflights13
 - dplyr
+- reticulate
 
 Python packages:
 
