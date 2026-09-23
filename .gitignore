@@ -1,7 +1,7 @@
-.quarto/
+/.quarto/
 **/*.quarto_ipynb
 _site/
 .venv/
 .Rhistory
 renv/library
-/.quarto/
+.ipynb_checkpoints
