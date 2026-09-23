@@ -52,7 +52,13 @@ directory is also the publishable site output.
 
 ## Site Landing
 
-> Run it locally by open `docs/index.html` with browser
+> Run it locally by running the following shell command in a terminal:
+
+```sh
+git clone https://github.com/Xilillusion/xilillusion.github.io.git
+```
+
+> Open `xilillusion.github.io/docs/index.html` with browser
 
 OR
 
