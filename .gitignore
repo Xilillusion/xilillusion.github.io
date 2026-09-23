@@ -4,3 +4,4 @@ _site/
 .venv/
 .Rhistory
 renv/library
+/.quarto/
