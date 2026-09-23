@@ -8,72 +8,87 @@ date: "2026-09-21"
 
 The data used in this post comes from the `fishing` dataset in the [`COUNT` package on CRAN](https://cran.r-project.org/package=COUNT). It contains data detailing fish catching data such as site number, fish density and so on.
 
-```{r}
+```{python}
 #| label: setup
 #| message: false
 #| warning: false
 
-library(COUNT)
-library(dplyr)
-library(ggplot2)
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
 
-# Load dataset into memory
-data("fishing", package = "COUNT")
-head(fishing)
+# Load dataset from CRAN source repository
+url = "https://raw.githubusercontent.com/vincentarelbundock/Rdatasets/master/csv/COUNT/fishing.csv"
+fishing = pd.read_csv(url)
+
+# Display initial rows
+fishing.head()
 ```
 
 ## Exploratory Analysis
 
 To understand the temporal factors influencing fish concentration, we first examine how annual observations impact average fish density.
 
-```{r}
+```{python}
 #| label: year-summary-stats
 #| echo: true
 
-mode_summary <- fishing |>
-  group_by(year) |>
-  summarize(
-    count = n(),
-    mean_density = mean(density, na.rm = TRUE),
-    median_density = median(density, na.rm = TRUE)
-  ) |>
-  arrange(desc(mean_density))
+year_summary = (
+    fishing.groupby("year")
+    .agg(
+        count=("density", "size"),
+        mean_density=("density", "mean"),
+        median_density=("density", "median")
+    )
+    .sort_values(by="mean_density", ascending=False)
+    .reset_index()
+)
 
-mode_summary
+year_summary
 ```
 Evaluating aggregate annual density yields no clear directional trend. Next, we aggregate density by individual observation period to assess intra-annual patterns.
 
-```{r}
+```{python}
 #| label: period-summary-stats
 #| echo: true
 
-mode_summary <- fishing |>
-  group_by(period) |>
-  summarize(
-    count = n(),
-    mean_density = mean(density, na.rm = TRUE),
-    median_density = median(density, na.rm = TRUE)
-  ) |>
-  arrange(desc(mean_density))
+period_summary = (
+    fishing.groupby("period")
+    .agg(
+        count=("density", "size"),
+        mean_density=("density", "mean"),
+        median_density=("density", "median")
+    )
+    .sort_values(by="mean_density", ascending=False)
+    .reset_index()
+)
 
-mode_summary
+period_summary
 ```
 Grouping by period reveals a pronounced downward trajectory in fish density over time. To better evaluate why annual averages mask this trend, we generate a figure comparing yearly density values.
 
-```{r}
-#| label: fig-yearly-density
-#| fig-cap: "Distribution of fish density across observation years."
-#| echo: true
+```{python}
+plt.figure(figsize=(8, 5))
 
-ggplot(fishing, aes(x = factor(year), y = density)) +
-  geom_boxplot(fill = "steelblue", alpha = 0.4, outlier.shape = NA) +
-  geom_jitter(width = 0.15, alpha = 0.6, color = "darkblue") +
-  labs(
-    x = "Year",
-    y = "Fish Density",
-    title = "Yearly Fish Density Distribution"
-  ) +
-  theme_minimal()
+# Boxplot overlaid with strip plot for individual points
+sns.boxplot(
+    data=fishing, 
+    x="year", 
+    y="density", 
+)
+
+sns.stripplot(
+    data=fishing, 
+    x="year", 
+    y="density", 
+)
+
+plt.title("Yearly Fish Density Distribution")
+plt.xlabel("Year")
+plt.ylabel("Fish Density")
+plt.grid(axis="y", linestyle="--", alpha=0.5)
+plt.tight_layout()
+plt.show()
 ```
 
 ## What We Found

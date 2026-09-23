@@ -35,17 +35,66 @@
     "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\nI come from Guangdong China. I studied in University of Alberta for Bachelor of Science in Computing Science before MDS. I hope I can find a good job after the program. Note that I does not look like the image above. This milestone provides basic instructions on how to use quarto."
   },
   {
+    "objectID": "posts/fishing/index.html",
+    "href": "posts/fishing/index.html",
+    "title": "Analyzing Temporal Factors Influencing Fish Concentration",
+    "section": "",
+    "text": "The data used in this post comes from the fishing dataset in the COUNT package on CRAN. It contains data detailing fish catching data such as site number, fish density and so on.\n\nimport pandas as pd\nimport seaborn as sns\nimport matplotlib.pyplot as plt\n\n# Load dataset from CRAN source repository\nurl = \"https://raw.githubusercontent.com/vincentarelbundock/Rdatasets/master/csv/COUNT/fishing.csv\"\nfishing = pd.read_csv(url)\n\n# Display initial rows\nfishing.head()\n\n\n\n\n\n\n\n\nrownames\nsite\ntotabund\ndensity\nmeandepth\nyear\nperiod\nsweptarea\n\n\n\n\n0\n1\n1\n76\n0.002070\n804\n1978\n1977-1989\n36710.000000\n\n\n1\n2\n2\n161\n0.003520\n808\n2001\n2000-2002\n45741.253906\n\n\n2\n3\n3\n39\n0.000981\n809\n2001\n2000-2002\n39775.000000\n\n\n3\n4\n4\n410\n0.008039\n848\n1979\n1977-1989\n51000.000000\n\n\n4\n5\n5\n177\n0.005933\n853\n2002\n2000-2002\n29831.251953"
+  },
+  {
+    "objectID": "posts/fishing/index.html#data-source",
+    "href": "posts/fishing/index.html#data-source",
+    "title": "Analyzing Temporal Factors Influencing Fish Concentration",
+    "section": "",
+    "text": "The data used in this post comes from the fishing dataset in the COUNT package on CRAN. It contains data detailing fish catching data such as site number, fish density and so on.\n\nimport pandas as pd\nimport seaborn as sns\nimport matplotlib.pyplot as plt\n\n# Load dataset from CRAN source repository\nurl = \"https://raw.githubusercontent.com/vincentarelbundock/Rdatasets/master/csv/COUNT/fishing.csv\"\nfishing = pd.read_csv(url)\n\n# Display initial rows\nfishing.head()\n\n\n\n\n\n\n\n\nrownames\nsite\ntotabund\ndensity\nmeandepth\nyear\nperiod\nsweptarea\n\n\n\n\n0\n1\n1\n76\n0.002070\n804\n1978\n1977-1989\n36710.000000\n\n\n1\n2\n2\n161\n0.003520\n808\n2001\n2000-2002\n45741.253906\n\n\n2\n3\n3\n39\n0.000981\n809\n2001\n2000-2002\n39775.000000\n\n\n3\n4\n4\n410\n0.008039\n848\n1979\n1977-1989\n51000.000000\n\n\n4\n5\n5\n177\n0.005933\n853\n2002\n2000-2002\n29831.251953"
+  },
+  {
+    "objectID": "posts/fishing/index.html#exploratory-analysis",
+    "href": "posts/fishing/index.html#exploratory-analysis",
+    "title": "Analyzing Temporal Factors Influencing Fish Concentration",
+    "section": "Exploratory Analysis",
+    "text": "Exploratory Analysis\nTo understand the temporal factors influencing fish concentration, we first examine how annual observations impact average fish density.\n\nyear_summary = (\n    fishing.groupby(\"year\")\n    .agg(\n        count=(\"density\", \"size\"),\n        mean_density=(\"density\", \"mean\"),\n        median_density=(\"density\", \"median\")\n    )\n    .sort_values(by=\"mean_density\", ascending=False)\n    .reset_index()\n)\n\nyear_summary\n\n\n\n\n\n\n\n\nyear\ncount\nmean_density\nmedian_density\n\n\n\n\n0\n1983\n5\n0.006940\n0.003441\n\n\n1\n1981\n21\n0.006783\n0.006148\n\n\n2\n1979\n21\n0.006251\n0.004583\n\n\n3\n1982\n18\n0.006087\n0.004069\n\n\n4\n1980\n17\n0.005575\n0.004208\n\n\n5\n2000\n6\n0.004122\n0.003084\n\n\n6\n2002\n20\n0.003852\n0.001676\n\n\n7\n2001\n24\n0.002480\n0.001742\n\n\n8\n1978\n7\n0.002136\n0.001559\n\n\n9\n1977\n2\n0.000907\n0.000907\n\n\n10\n1984\n2\n0.000625\n0.000625\n\n\n11\n1989\n3\n0.000252\n0.000264\n\n\n12\n1986\n1\n0.000082\n0.000082\n\n\n\n\n\n\n\nEvaluating aggregate annual density yields no clear directional trend. Next, we aggregate density by individual observation period to assess intra-annual patterns.\n\nperiod_summary = (\n    fishing.groupby(\"period\")\n    .agg(\n        count=(\"density\", \"size\"),\n        mean_density=(\"density\", \"mean\"),\n        median_density=(\"density\", \"median\")\n    )\n    .sort_values(by=\"mean_density\", ascending=False)\n    .reset_index()\n)\n\nperiod_summary\n\n\n\n\n\n\n\n\nperiod\ncount\nmean_density\nmedian_density\n\n\n\n\n0\n1977-1989\n97\n0.005481\n0.003596\n\n\n1\n2000-2002\n50\n0.003226\n0.002103\n\n\n\n\n\n\n\nGrouping by period reveals a pronounced downward trajectory in fish density over time. To better evaluate why annual averages mask this trend, we generate a figure comparing yearly density values.\n\nplt.figure(figsize=(8, 5))\n\n# Boxplot overlaid with strip plot for individual points\nsns.boxplot(\n    data=fishing, \n    x=\"year\", \n    y=\"density\", \n)\n\nsns.stripplot(\n    data=fishing, \n    x=\"year\", \n    y=\"density\", \n)\n\nplt.title(\"Yearly Fish Density Distribution\")\nplt.xlabel(\"Year\")\nplt.ylabel(\"Fish Density\")\nplt.grid(axis=\"y\", linestyle=\"--\", alpha=0.5)\nplt.tight_layout()\nplt.show()"
+  },
+  {
+    "objectID": "posts/fishing/index.html#what-we-found",
+    "href": "posts/fishing/index.html#what-we-found",
+    "title": "Analyzing Temporal Factors Influencing Fish Concentration",
+    "section": "What We Found",
+    "text": "What We Found\nAnalyzing @fig-yearly-density shows key insights into the temporal pattern of fish density across the dataset:\n\nInconsistent Sampling Volume: Data collection is heavily concentrated in 1978 to 1983 and 2000 to 2002. Years such as 1977, 1984, 1986, and 1989 contain very few observations, resulting in near-zero spread.\nHigher Variability in early 1980s: Between 1979 and 1983, fish density exhibited high overall variance, with median values near 0.005 and frequent high-density peaks exceeding 0.02."
+  },
+  {
+    "objectID": "posts/weather/index.html",
+    "href": "posts/weather/index.html",
+    "title": "Analyzing Relationship between Temperature and Relative Humidity across NYC Airports",
+    "section": "",
+    "text": "The data used in this post comes from the weather dataset in the nycflights13 package on CRAN. It contains the weather information across airports near New York.\n\nlibrary(nycflights13)\nlibrary(dplyr)\nlibrary(ggplot2)\n\n# Load dataset into memory\ndata(\"weather\", package = \"nycflights13\")\nhead(weather)\n\n# A tibble: 6 × 15\n  origin  year month   day  hour  temp  dewp humid wind_dir wind_speed wind_gust\n  &lt;chr&gt;  &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;\n1 EWR     2013     1     1     1  39.0  26.1  59.4      270      10.4         NA\n2 EWR     2013     1     1     2  39.0  27.0  61.6      250       8.06        NA\n3 EWR     2013     1     1     3  39.0  28.0  64.4      240      11.5         NA\n4 EWR     2013     1     1     4  39.9  28.0  62.2      250      12.7         NA\n5 EWR     2013     1     1     5  39.0  28.0  64.4      260      12.7         NA\n6 EWR     2013     1     1     6  37.9  28.0  67.2      240      11.5         NA\n# ℹ 4 more variables: precip &lt;dbl&gt;, pressure &lt;dbl&gt;, visib &lt;dbl&gt;,\n#   time_hour &lt;dttm&gt;"
+  },
+  {
+    "objectID": "posts/weather/index.html#data-source",
+    "href": "posts/weather/index.html#data-source",
+    "title": "Analyzing Relationship between Temperature and Relative Humidity across NYC Airports",
+    "section": "",
+    "text": "The data used in this post comes from the weather dataset in the nycflights13 package on CRAN. It contains the weather information across airports near New York.\n\nlibrary(nycflights13)\nlibrary(dplyr)\nlibrary(ggplot2)\n\n# Load dataset into memory\ndata(\"weather\", package = \"nycflights13\")\nhead(weather)\n\n# A tibble: 6 × 15\n  origin  year month   day  hour  temp  dewp humid wind_dir wind_speed wind_gust\n  &lt;chr&gt;  &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;\n1 EWR     2013     1     1     1  39.0  26.1  59.4      270      10.4         NA\n2 EWR     2013     1     1     2  39.0  27.0  61.6      250       8.06        NA\n3 EWR     2013     1     1     3  39.0  28.0  64.4      240      11.5         NA\n4 EWR     2013     1     1     4  39.9  28.0  62.2      250      12.7         NA\n5 EWR     2013     1     1     5  39.0  28.0  64.4      260      12.7         NA\n6 EWR     2013     1     1     6  37.9  28.0  67.2      240      11.5         NA\n# ℹ 4 more variables: precip &lt;dbl&gt;, pressure &lt;dbl&gt;, visib &lt;dbl&gt;,\n#   time_hour &lt;dttm&gt;"
+  },
+  {
+    "objectID": "posts/weather/index.html#exploratory-analysis",
+    "href": "posts/weather/index.html#exploratory-analysis",
+    "title": "Analyzing Relationship between Temperature and Relative Humidity across NYC Airports",
+    "section": "Exploratory Analysis",
+    "text": "Exploratory Analysis\nTo evaluate temperature differences across the metropolitan region, we filter missing readings and calculate central tendency and spread for each airport.\n\n# Clean missing values and compute summary metrics\nweather |&gt;\n  filter(!is.na(temp)) |&gt;\n  group_by(origin) |&gt;\n  summarise(\n    Mean_Temp = round(mean(temp), 2),\n    Median_Temp = round(median(temp), 2),\n    SD_Temp = round(sd(temp), 2),\n    IQR_Temp = round(IQR(temp), 2),\n    Observations = n()\n  )\n\n# A tibble: 3 × 6\n  origin Mean_Temp Median_Temp SD_Temp IQR_Temp Observations\n  &lt;chr&gt;      &lt;dbl&gt;       &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;        &lt;int&gt;\n1 EWR         55.6        55.9    18.4     31.1         8702\n2 JFK         54.5        54.0    17.1     29.2         8706\n3 LGA         55.8        55.9    17.9     31.1         8706\n\n\nWe generate comparative boxplots overlaid with density contours to visualize the spread, skewness, and potential outliers across the three airports.\n\nweather_clean &lt;- weather |&gt; filter(!is.na(temp))\n\nggplot(weather_clean, aes(x = origin, y = temp, fill = origin)) +\n  geom_boxplot() +\n  labs(\n    title = \"Temperature Distribution by NYC Airport\",\n    subtitle = \"Hourly records from 2013\",\n    x = \"Airport Code\",\n    y = \"Temperature (°F)\"\n  ) +\n  theme_minimal() +\n  theme(legend.position = \"none\")\n\n\n\n\n\n\n\nFigure 1: Temperature distributions and medians across EWR, JFK, and LGA airports.\n\n\n\n\n\nAlthough the means appear similar, we run an ANOVA to formally test whether the minor observed differences in mean temperature across airports are statistically significant.\n\n# Fit ANOVA model testing temperature differences across origins\nanova_model &lt;- aov(temp ~ origin, data = weather_clean)\nsummary(anova_model)\n\n               Df  Sum Sq Mean Sq F value   Pr(&gt;F)    \norigin          2    8318    4159   13.16 1.95e-06 ***\nResiduals   26111 8254036     316                     \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n\nThe ANOVA test yields an \\(F\\)-statistic of 13.16 with a \\(p\\)-value of 1.95e-06. Because the \\(p\\)-value is very small, we reject the null hypothesis. There is statistically significant difference in mean air temperature among EWR, JFK, and LGA."
+  },
+  {
     "objectID": "posts/first-weeks/index.html",
     "href": "posts/first-weeks/index.html",
     "title": "My first weeks in MDS",
     "section": "",
-    "text": "This is the text message"
+    "text": "A long line to get into the hall"
   },
   {
     "objectID": "blog.html",
     "href": "blog.html",
     "title": "Blog",
     "section": "",
-    "text": "My first weeks in MDS\n\n\n\n\n\n\n\n\nSep 9, 2026\n\n\nYingwen Liu\n\n\n\n\n\nNo matching items"
+    "text": "Analyzing Relationship between Temperature and Relative Humidity across NYC Airports\n\n\n\n\n\n\n\n\nSep 22, 2026\n\n\nYingwen\n\n\n\n\n\n\n\n\n\n\n\n\nAnalyzing Temporal Factors Influencing Fish Concentration\n\n\n\n\n\n\n\n\nSep 21, 2026\n\n\nYingwen\n\n\n\n\n\n\n\n\n\n\n\n\nMy first weeks in MDS\n\n\n\n\n\n\n\n\nSep 9, 2026\n\n\nYingwen Liu\n\n\n\n\n\nNo matching items"
   }
 ]
