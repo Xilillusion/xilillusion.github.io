@@ -34,11 +34,6 @@ Run the following shell commands in a terminal:
 git clone https://github.com/Xilillusion/xilillusion.github.io.git
 cd xilillusion.github.io
 
-# Confirm the installed versions (the versions used for this site are above).
-quarto --version
-uv --version
-R --version
-
 # Render the website.
 uv sync
 uv run quarto render
@@ -57,11 +52,11 @@ directory is also the publishable site output.
 
 ## Site Landing
 
-This website is hosted on [GitHub Pages](https://pages.github.com/) and is available at https://xilillusion.github.io/ 
+> Run it locally by open `docs/index.html` with browser
 
-or
+OR
 
-Open `docs/index.html` with browser to open it locally.
+> This website is also hosted on [GitHub Pages](https://pages.github.com/) and is available at https://xilillusion.github.io/ 
 
 ## Data and network access
 
