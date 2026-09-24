@@ -35,35 +35,37 @@ Run the following shell commands in a terminal:
 git clone https://github.com/Xilillusion/xilillusion.github.io.git
 cd xilillusion.github.io
 
+uv sync                       # Sync Python environment
+Rscript -e "renv::restore()"  # Restore R packages
+
 # Render the website.
-uv sync
 uv run quarto render
 ```
 
-The `quarto render` command writes the built site to `docs/`, as configured in
-[`_quarto.yml`](_quarto.yml). To open it locally after rendering, serve that
+To open it locally after rendering, serve that
 directory from the repository root:
 
 ```sh
 python3 -m http.server 8000 --directory docs
 ```
 
-Then visit <http://localhost:8000/> in a browser. The checked-in `docs/`
-directory is also the publishable site output.
+Then visit <http://localhost:8000/> in a browser.
 
 ## Site Landing
 
 > Run it locally by running the following shell command in a terminal:
 
-```sh
-git clone https://github.com/Xilillusion/xilillusion.github.io.git
-```
+> ```sh
+> git clone https://github.com/Xilillusion/xilillusion.github.io.git
 
-> Open `xilillusion.github.io/docs/index.html` with browser
+> python3 -m http.server 8000 --directory xilillusion.github.io.git/docs
+> ```
+
+> Then visit <http://localhost:8000/> in a browser.
 
 OR
 
-> This website is also hosted on [GitHub Pages](https://pages.github.com/) and is available at https://xilillusion.github.io/ 
+> Also available at https://xilillusion.github.io/ hosted on [GitHub Pages](https://pages.github.com/)  
 
 ## Data and network access
 
