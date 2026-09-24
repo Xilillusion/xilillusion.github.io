@@ -1,8 +1,6 @@
 # xilillusion.github.io
 
-This repository contains my personal website and blog. It is a
-static [Quarto](https://quarto.org/) website whose source pages are the
-`.qmd` files in this repository.
+This repository contains my personal website and blog. It is a static [Quarto](https://quarto.org/) website whose source pages are the `.qmd` files in this repository.
 
 ## Prerequisites
 
@@ -31,7 +29,7 @@ Python packages:
 
 Run the following shell commands in a terminal:
 
-```sh
+``` sh
 git clone https://github.com/Xilillusion/xilillusion.github.io.git
 cd xilillusion.github.io
 
@@ -42,10 +40,9 @@ Rscript -e "renv::restore()"  # Restore R packages
 uv run quarto render
 ```
 
-To open it locally after rendering, serve that
-directory from the repository root:
+To open it locally after rendering, serve that directory from the repository root:
 
-```sh
+``` sh
 python3 -m http.server 8000 --directory docs
 ```
 
@@ -55,21 +52,22 @@ Then visit <http://localhost:8000/> in a browser.
 
 > Run it locally by running the following shell command in a terminal:
 
-> ```sh
-> git clone https://github.com/Xilillusion/xilillusion.github.io.git
-
-> python3 -m http.server 8000 --directory xilillusion.github.io.git/docs
-> ```
+``` sh
+git clone https://github.com/Xilillusion/xilillusion.github.io.git
+python3 -m http.server 8000 --directory xilillusion.github.io.git/docs
+```
 
 > Then visit <http://localhost:8000/> in a browser.
 
 OR
 
-> Also available at https://xilillusion.github.io/ hosted on [GitHub Pages](https://pages.github.com/)  
+> Also available at https://xilillusion.github.io/ hosted on [GitHub Pages](https://pages.github.com/)
 
 ## Data and network access
 
-The application fetches the fishing dataset directly from [Rdatasets](https://github.com/vincentarelbundock/Rdatasets):
+Network access is required to restore R and Python environment, and
 
-* **Source URL:** `https://raw.githubusercontent.com/vincentarelbundock/Rdatasets/master/csv/COUNT/fishing.csv`
-* **Format:** CSV
+the application fetches the fishing dataset directly from [Rdatasets](https://github.com/vincentarelbundock/Rdatasets):
+
+- **Source URL:** `https://raw.githubusercontent.com/vincentarelbundock/Rdatasets/master/csv/COUNT/fishing.csv`
+- **Format:** CSV
