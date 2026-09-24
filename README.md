@@ -54,7 +54,7 @@ Then visit <http://localhost:8000/> in a browser.
 
 ``` sh
 git clone https://github.com/Xilillusion/xilillusion.github.io.git
-python3 -m http.server 8000 --directory xilillusion.github.io.git/docs
+python3 -m http.server 8000 --directory xilillusion.github.io/docs
 ```
 
 > Then visit <http://localhost:8000/> in a browser.
