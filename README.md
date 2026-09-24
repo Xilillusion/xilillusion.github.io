@@ -10,21 +10,6 @@ The site was built with:
 - `uv` 0.12.8
 - R 4.6.1
 
-The blog relies on both Python and R to execute code blocks and render data visualizations.
-
-R packages:
-
-- ggplot2
-- nycflights13
-- dplyr
-- reticulate
-
-Python packages:
-
-- pandas
-- seaborn
-- matplotlib
-
 ## Build from a fresh clone
 
 Run the following shell commands in a terminal:
@@ -71,3 +56,19 @@ the application fetches the fishing dataset directly from [Rdatasets](https://gi
 
 - **Source URL:** `https://raw.githubusercontent.com/vincentarelbundock/Rdatasets/master/csv/COUNT/fishing.csv`
 - **Format:** CSV
+
+## Packages
+The blog relies on both Python 3.14 and R to execute code blocks and render data visualizations.
+
+R packages:
+
+- ggplot2
+- nycflights13
+- dplyr
+- reticulate
+
+Python packages:
+
+- pandas
+- seaborn
+- matplotlib
