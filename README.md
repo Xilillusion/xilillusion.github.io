@@ -54,7 +54,7 @@ Network access is required to restore R and Python environment, and
 
 the application fetches the fishing dataset directly from [Rdatasets](https://github.com/vincentarelbundock/Rdatasets):
 
-- **Source URL:** `https://raw.githubusercontent.com/vincentarelbundock/Rdatasets/master/csv/COUNT/fishing.csv`
+- **Source URL:** <https://raw.githubusercontent.com/vincentarelbundock/Rdatasets/master/csv/COUNT/fishing.csv>
 - **Format:** CSV
 
 ## Packages
