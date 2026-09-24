@@ -74,6 +74,10 @@ period_summary
 Grouping by period reveals a pronounced downward trajectory in fish density over time. To better evaluate why annual averages mask this trend, we generate a figure comparing yearly density values.
 
 ```{r}
+#| label: fig-yearly-fish-density-distribution
+#| fig-cap: "Density distibution of fish by year."
+#| echo: true
+
 # Convert year to factor so ggplot treats it as categorical discrete groups on the x-axis
 ggplot(py$fishing, aes(x = factor(year), y = density)) +
   geom_boxplot(outlier.shape = NA) +

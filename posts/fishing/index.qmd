@@ -68,6 +68,10 @@ period_summary
 Grouping by period reveals a pronounced downward trajectory in fish density over time. To better evaluate why annual averages mask this trend, we generate a figure comparing yearly density values.
 
 ```{python}
+#| label: fig-yearly-fish-density-distribution
+#| fig-cap: "Density distibution of fish by year."
+#| echo: true
+
 plt.figure(figsize=(8, 5))
 
 # Boxplot overlaid with strip plot for individual points
